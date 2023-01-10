@@ -1,0 +1,18 @@
+﻿@model Oglasi.Models.Tip
+<option value="">Избери Модел</option>
+@if (ViewBag.modelii != null)
+{
+    foreach (var item in ViewBag.modelii)
+    {
+        if(item.markamodel==ViewBag.tip)
+                    {
+<option selected value="@item.markamodel">@item.markamodel</option>
+        }
+        else
+        { 
+
+            <option value="@item.markamodel">@item.markamodel</option>
+        }
+
+    }
+}

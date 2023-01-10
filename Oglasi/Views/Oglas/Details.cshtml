@@ -1,0 +1,115 @@
+﻿@model Oglasi.Models.Oglas
+
+@{
+    ViewBag.Title = "Details";
+}
+<br />
+<h2>@Html.DisplayFor(model => model.Nasolv)</h2>
+
+
+<div style="font-size:18px">
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+
+        </dt>
+        <dd class="text-center" style="margin-left:0px; margin-bottom:20px">
+            @{
+                if (Model.Images == null)
+                {
+
+
+                    <img class="rounded" src="~/Content/notfound.png" style="width:600px;max-height:300px " />
+                }
+                else
+                {
+                    var base64 = Convert.ToBase64String(Model.Images);
+                    var imsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <img class="rounded" src="@imsrc" style="width:800px;max-height:600px " />
+
+                }
+            }
+            <br />
+        </dd>
+
+        <dt>
+            Марка:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marka)
+
+
+        </dd>
+
+        <dt>
+            Модел:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+
+        <dt>
+            Година:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Godina)
+        </dd>
+
+
+        <dt>
+            Боја:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Boja)
+        </dd>
+        <dd>
+            <div style="height:46px"></div>
+        </dd>
+        <dd id="cenatekst">
+            <h2 style=" margin-top: 15px; margin-bottom: 15px; font-weight: bold">Цена: @Model.Cena €</h2>
+            <div id="prodavac"><span>Продавач:</span><br />
+            <span style="font-size: 20px; font-weight: bold">@Model.ime</span><br />
+            <span>Телефонски број:</span><br />
+            <p style="font-size:20px;font-weight:bold">@Model.telefon</p>
+            </div>
+        </dd>
+    </dl>
+
+    <h3>
+        Опис
+    </h3>   
+    <div>
+        <p style="font-size:18px; text-align:justify">@Model.Opis</p>
+    </div>
+</div>
+
+<p style="font-size:16px">
+    @Html.ActionLink("Назад кон огласи", "Index")
+</p>
+<style>
+    #cenatekst {
+        margin-left: 85px;
+        background-color: rgb(237,237,237);
+        padding-top: 15px;
+        padding-bottom: 10px;
+        color:darkblue;
+        padding-left: 10px;
+    }
+    #prodavac {
+        float: left;
+        margin-top: -231px;
+        height: 125px;
+        margin-left: 708px;
+        border: 1px solid black;
+        padding: 10px;
+    }
+    img
+    {
+       border:1px solid black;
+    }
+</style>

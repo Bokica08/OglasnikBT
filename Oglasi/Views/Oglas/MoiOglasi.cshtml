@@ -1,0 +1,130 @@
+﻿
+@model IEnumerable<Oglasi.Models.Oglas>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+@{
+    ViewBag.Title = "MoiOglasi";
+}
+
+<h2>Мои огласи</h2>
+<table id="oglasi" class="table">
+    <thead>
+        <tr>
+            <th>
+                Слика
+            </th>
+            <th>
+                Наслов
+            </th>
+            <th>
+                Година
+            </th>
+            <th>
+                Цена
+            </th>
+
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+
+            if (User.Identity.Name.Equals(item.userEmail)) {
+            <tr>
+
+                <td>
+                    @{
+                        if (item.Images == null)
+                        {
+
+
+                            <img src="~/Content/notfound.png" style="width:350px; max-height:200px " />
+                        }
+                        else
+                        {
+                            var base64 = Convert.ToBase64String(item.Images);
+                            var imsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                            <img src="@imsrc" style="width:350px;max-height:200px " />
+                        }
+                    }
+                </td>
+                <td class="link">
+                    @Html.ActionLink(item.Nasolv, "Details", new { id = item.ID }, new { @style = "color:black;" })
+                </td>
+                <td class="link1">
+                    @Html.DisplayFor(modelItem => item.Godina)
+                </td>
+                <td class="link1">
+                    @Html.DisplayFor(modelItem => item.Cena)€
+                </td>
+
+                <td>
+
+                        @Html.ActionLink("Промени", "Edit", new { id = item.ID } ,new {@class="btn btn-default"})
+                        <button data-id="@item.ID" class="btn btn-default js-delete" >Избриши</button>
+                    
+                </td>
+
+            </tr>
+                            }
+                        }
+    </tbody>
+
+</table>
+<style>
+    .link {
+        font-size: 20px;
+    }
+
+    .link1 {
+        font-size: 18px;
+    }
+
+    th {
+        font-size: 16px;
+    }
+    .btn-default {
+        margin: 5px;
+    }
+</style>
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#oglasi").DataTable();
+            $("#oglasi .js-delete").on("click", function () {
+
+                var button = $(this);
+                bootbox.confirm("Дали сакате да ги избришете огласот?", function (result) {
+
+                    if (result) {
+                        $.ajax({
+                            url: "/Oglas/Delete/" + button.attr("data-id"),
+                            method: "GET",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+}
+<style>
+    img {
+        border: 1px solid black;
+    }
+</style>

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ОгласникБТ</h1>
+    <p class="lead">Најдоброто место за продавање и купување на автомобили.</p>
+    <span><a href="/Oglas/Index" class="btn btn-primary btn-lg">Погледни ги сите огласи</a></span>
+    <span><a href="/Home/Contact" class="btn btn-primary btn-lg">Контакт</a></span>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Огласувај бесплатно</h2>
+        <p>
+            Доколку сте најавени на ОгласникБТ можете да огласувате неограничен број на автомобили.
+        </p>
+        <p><a class="btn btn-default" href="/Oglas/Create">Креирај оглас</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Регистрирај се</h2>
+        <p>Немате акаунт? Направете го веднаш!</p>
+      @{  if (@Request.IsAuthenticated) {
+        <p class="veke">Веќе сте најавени</p>
+          }
+          else {
+        <p><a class="btn btn-default" href="/Account/Register">Регистрирај се</a></p>
+              }
+          }
+    </div>
+    <div class="col-md-4">
+        <h2>Најави се</h2>
+        <p>Најавете се на вашиот веќе постоечки акаунт</p>
+       @{ if (@Request.IsAuthenticated)
+           {
+        <p class="veke">Веќе сте најавени</p>
+           }
+           else
+           {
+        <p><a class="btn btn-default" href="/Account/Login">Најави се</a></p>
+               }
+           }
+    </div>
+</div>
+<style>
+    .jumbotron {
+        background-image: url("../../Content/se-image-4799f9106491ebb58ca3351f6df5c44a.jpg");
+        background-repeat: no-repeat;
+        width: 100% !important;
+        height: 585px;
+        background-size: cover;
+    }
+    .jumbotron p
+    {
+        width:350px;
+    }
+    .veke {
+        border: 1px solid black;
+        padding: 10px;
+        width: 140px;
+        color: white;
+        background-color: #152737;
+        
+    }
+</style>

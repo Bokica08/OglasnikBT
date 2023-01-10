@@ -1,0 +1,124 @@
+﻿@model Oglasi.Models.Oglas
+
+@{
+    ViewBag.Title = "Create";
+}
+<br />
+<h2>Креирај нов оглас</h2>
+
+
+@using (Html.BeginForm("Create","Oglas",FormMethod.Post,new {enctype="multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label col-md-2">Марка</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Marka, new SelectList(ViewBag.marki, "MarkaName", "MarkaName"), "Избери Марка", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Marka, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Модел</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Model, new SelectList(""), "Избери Модел", new { htmlAttributes = new { @id = "dd2" } })
+            @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Наслов</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Nasolv, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nasolv, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Година</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Godina, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Godina, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Цена</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Cena, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Cena, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Боја</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Boja, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Boja, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Опис</label>
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Opis, 5, 80, null)
+            @Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Име на сопственик</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Телефон</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.telefon, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.telefon, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Слика</label>
+        <div class="col-md-10">
+            <input type="file" id="image1" name="image1" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Креирај" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Marka").change(function () {
+            var Markaid = $(this).val();
+            console.log(Markaid);
+            $.ajax({
+                type:"POST",
+                url:"/Oglas/getmodel?mid=" + Markaid,
+                contentType:"html",
+                success: function (response) {
+                    $("#Model").empty();
+                    $("#Model").append(response);
+                }
+            })
+        })
+
+    })
+</script>
